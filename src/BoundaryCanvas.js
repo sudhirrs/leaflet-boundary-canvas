@@ -176,6 +176,8 @@
             imageObj = new Image(),
             _this = this,
             setPattern = function () {
+            	//canvas.width = canvas.width;
+            	ctx.clearRect(0, 0, canvas.width, canvas.height);
             
             var state = _this._getTileGeometry(tilePoint.x, tilePoint.y, zoom),
                 c, r, p,
@@ -210,14 +212,15 @@
             ctx.rect(0, 0, canvas.width, canvas.height);
             ctx.fillStyle = pattern;
             ctx.fill();
+            _this.tileDrawn(canvas);
         };
         
         imageObj.onload = function () {
             setTimeout(setPattern, 0); //IE9 bug - black tiles appear randomly if call setPattern() without timeout
-        }
-		this._adjustTilePoint(tilePoint);
+        };
+	this._adjustTilePoint(tilePoint);
         imageObj.src = this.getTileUrl(tilePoint);
-	}
+    }
 });
 
 L.TileLayer.boundaryCanvas = function (url, options) {
